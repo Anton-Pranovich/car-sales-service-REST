@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -12,8 +15,10 @@ public class Car {
 	@JsonIgnore
 	private @Id @GeneratedValue Long id;
 	@NotNull
+	@ApiModelProperty(notes = "Car Name",name="name",required=true,value="test name")
 	private String name;
 	@NotNull
+	@ApiModelProperty(notes = "Car cost",name="cost",required=true,value="1.0")
 	private Double cost;
 
 	public Car() {

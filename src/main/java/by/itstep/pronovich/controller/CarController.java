@@ -26,7 +26,12 @@ import by.itstep.pronovich.exception.CarNotFoundException;
 import by.itstep.pronovich.model.Car;
 import by.itstep.pronovich.payroll.CarModelAssembler;
 import by.itstep.pronovich.repository.CarRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
+@Api(value="It's a car controller")
 @RestController
 public class CarController {
 
@@ -49,15 +54,23 @@ public class CarController {
 //	List<Car> all() {
 //		return repository.findAll();
 //	}
-
+	
+	@ApiOperation(value="Get cars")
+	@ApiResponses(value= {
+			@ApiResponse(code=200, message = "All is Ok"),
+			@ApiResponse(code = 401, message = "Not Authorized!"),
+			@ApiResponse(code = 403, message = "Forbidden!"),
+			@ApiResponse(code = 404, message = "Not Found!") 
+			
+	})
 	@GetMapping("/cars")
 	public CollectionModel<EntityModel<Car>> all() {
 
-		List<EntityModel<Car>> employees = repository.findAll().stream() //
+		List<EntityModel<Car>> cars = repository.findAll().stream() //
 				.map(assembler::toModel) //
 				.collect(Collectors.toList());
 
-		return CollectionModel.of(employees, linkTo(methodOn(CarController.class).all()).withSelfRel());
+		return CollectionModel.of(cars, linkTo(methodOn(CarController.class).all()).withSelfRel());
 	}
 
 //	@PostMapping("/cars")
