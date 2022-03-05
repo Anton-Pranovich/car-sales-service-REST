@@ -49,11 +49,6 @@ public class CarController {
 		this.repository = repository;
 		this.assembler = new CarModelAssembler();
 	}
-
-//	@GetMapping("/cars")
-//	List<Car> all() {
-//		return repository.findAll();
-//	}
 	
 	@ApiOperation(value="Get cars")
 	@ApiResponses(value= {
@@ -73,18 +68,8 @@ public class CarController {
 		return CollectionModel.of(cars, linkTo(methodOn(CarController.class).all()).withSelfRel());
 	}
 
-//	@PostMapping("/cars")
-//	public Car newCar(@RequestBody @Valid Car newCar, BindingResult bindingResult) {
-//		// String answer;
-//		if (bindingResult.hasErrors()) {
-////			log.info("Returning addProduct.jsp page");
-////			answer = "Invalid input data";
-//			throw new CarNotFoundException("invalid input data");
-//		}
-//		return repository.save(newCar);
-//	}
 	@PostMapping("/cars")
-	public ResponseEntity <Car> newCar(@RequestBody @Valid Car newCar, BindingResult bindingResult) {
+	public ResponseEntity <Car> newCar(@Valid @RequestBody Car newCar) {
 		Car car = repository.save(newCar);
 		EntityModel<Car> model =  EntityModel.of(car, 
 				linkTo(methodOn(CarController.class).oneCar(car.getId())).withSelfRel(),
@@ -96,13 +81,6 @@ public class CarController {
 			
 		
 	}
-
-//	// Single item
-
-//	@GetMapping("/cars/{id}")
-//	Car one(@PathVariable Long id) {
-//		return repository.findById(id).orElseThrow(() -> new CarNotFoundException(id));
-//	}
 
 	@GetMapping("/cars/{id}")
 	public EntityModel<Car> oneCar(@PathVariable Long id) {
