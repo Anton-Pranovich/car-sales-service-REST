@@ -4,10 +4,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.validation.constraints.NotNull;
+
 @Entity
 public class Car {
+	@JsonIgnore
 	private @Id @GeneratedValue Long id;
+	@NotNull
 	private String name;
+	@NotNull
 	private Double cost;
 
 	public Car() {
